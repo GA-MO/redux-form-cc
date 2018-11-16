@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "./lib/index.js",
-  "files": [ "lib" ],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "dev": "parcel index.html",
     "init": "mkdir lib",
