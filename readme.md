@@ -1,4 +1,10 @@
 
+# Installation
+```
+$ npm install redux-form-cc --save
+$ yarn add redux-form-cc
+```
+
 ## Step 1 : Create Form Data
 ```js
 const formData = (state) => ({
@@ -60,31 +66,31 @@ const action = ({ key, value }) => dispatch => dispatch({
 
 ## Create Form with HOC
 ```js
-  import { createForm } from '../redux-form-cc'
-  
-  const options = {
-    action,
-    formData,
-    renderUIInputField
-  }
+import { createForm } from '../redux-form-cc'
 
-  const ComponentWithForm = createForm(options)(Component)
+const options = {
+  action,
+  formData,
+  renderUIInputField
+}
+
+const ComponentWithForm = createForm(options)(Component)
 ```
 
 ## Create Form with Decorator
 ```js
-  import { createForm } from '../redux-form-cc'
-  
-  const options = {
-    action,
-    formData,
-    renderUIInputField
-  }
+import { createForm } from '../redux-form-cc'
 
-  @createForm(options)
-  class Component extends React.Component {
-    ...
-  }
+const options = {
+  action,
+  formData,
+  renderUIInputField
+}
+
+@createForm(options)
+class Component extends React.Component {
+  ...
+}
 ```
 ## Render Fields
 The component will has `form` and `firstError`
