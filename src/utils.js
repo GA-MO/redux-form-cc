@@ -1,4 +1,4 @@
-const validateRules = (value, rules) => {
+const validateRules = (value, rules = []) => {
   let errorMessage = ''
   for (let i = 0; i < rules.length; i++) {
     const hasRule = rules[i].hasOwnProperty('rule')
