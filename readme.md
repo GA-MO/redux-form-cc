@@ -66,7 +66,7 @@ const action = ({ key, value }) => dispatch => dispatch({
 
 ## Create Form with HOC
 ```js
-import { createForm } from '../redux-form-cc'
+import { createForm } from 'redux-form-cc'
 
 const options = {
   action,
@@ -79,7 +79,7 @@ const ComponentWithForm = createForm(options)(Component)
 
 ## Create Form with Decorator
 ```js
-import { createForm } from '../redux-form-cc'
+import { createForm } from 'redux-form-cc'
 
 const options = {
   action,
