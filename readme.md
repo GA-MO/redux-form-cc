@@ -43,8 +43,8 @@ const formData = (state) => ({
 ```js
 const UIInputField = ({ fieldData, onChange }) => (
   <div>
-    <input {...data} onChange={(e) => onChange(e.target.value)} />
-    {data.errorMessage}
+    <input {...fieldData} onChange={(e) => onChange(e.target.value)} />
+    {fieldData.errorMessage}
   </div>
 )
 
