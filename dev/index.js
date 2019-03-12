@@ -2,7 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import reduxStore from './store'
-import { createForm } from '../src'
+import { createForm, useReduxFormCC } from '../src'
+// import { createForm, useReduxFormCC } from '../lib'
 
 class Page extends React.Component {
   render () {
@@ -10,6 +11,7 @@ class Page extends React.Component {
 
     return (
       <div>
+        <h1>Use HOC</h1>
         {form.firstname}
         {form.lastname}
         {firstError}
@@ -18,7 +20,7 @@ class Page extends React.Component {
   }
 }
 
-const formData = (state) => {
+const formData = state => {
   return {
     firstname: {
       name: 'firstname',
@@ -31,11 +33,11 @@ const formData = (state) => {
       rules: [
         {
           message: 'Required',
-          rule: (value) => value !== ''
+          rule: value => value !== ''
         },
         {
           message: 'Please key "redux-form-cc"',
-          rule: (value) => value === 'redux-form-cc'
+          rule: value => value === 'redux-form-cc'
         }
       ]
     },
@@ -50,7 +52,7 @@ const formData = (state) => {
       rules: [
         {
           message: 'Required',
-          rule: (value) => value !== ''
+          rule: value => value !== ''
         }
       ]
     }
@@ -59,8 +61,8 @@ const formData = (state) => {
 
 const Input = ({ data, onChange }) => (
   <div>
-    <input {...data} onChange={(e) => onChange(e.target.value)} />
-    {data.errorMessage}
+    <input {...data} onChange={e => onChange(e.target.value)} />
+    {data.message}
   </div>
 )
 
@@ -68,7 +70,7 @@ const renderUIInputField = (fieldData, onChange) => {
   return <Input data={fieldData} onChange={onChange} />
 }
 
-const action = ({ key, value }) => (dispatch) => {
+const action = ({ key, value }) => dispatch => {
   return dispatch({
     type: 'UPDATE-FORM-VALUE',
     key,
@@ -84,9 +86,25 @@ const options = {
 
 const App = createForm(options)(Page)
 
+const AppHook = () => {
+  const { form, firstError } = useReduxFormCC(options)
+
+  return (
+    <div>
+      <h1>Use Hook</h1>
+      {form.firstname}
+      {form.lastname}
+      {firstError}
+    </div>
+  )
+}
+
 const Root = () => (
   <Provider store={reduxStore}>
-    <App />
+    <>
+      <App />
+      <AppHook />
+    </>
   </Provider>
 )
 

@@ -1,4 +1,4 @@
-const validateRules = (value, rules = []) => {
+export default (value, rules = []) => {
   let errorMessage = ''
   for (let i = 0; i < rules.length; i++) {
     const hasRule = rules[i].hasOwnProperty('rule')
@@ -9,5 +9,3 @@ const validateRules = (value, rules = []) => {
   }
   return errorMessage
 }
-
-export { validateRules }
