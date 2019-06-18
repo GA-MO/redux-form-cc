@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from 'react'
-import { ReactReduxContext } from 'react-redux'
+import { useCallback } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import injectMessage from './injectMessage'
 import getFirstError from './getFirstError'
 import getUIInputField from './getUIInputField'
@@ -23,47 +23,22 @@ const useReduxFormCC = options => {
     return
   }
 
-  const { store } = useContext(ReactReduxContext)
+  const dispatch = useDispatch()
+  const store = useSelector(s => s)
 
-  const getFormState = () => injectMessage(formData(store.getState()))
+  const getFormState = useCallback(() => injectMessage(formData(store)), [formData, store])
 
-  const initFormState = getFormState()
-  const initFirstError = getFirstError({
-    formState: initFormState,
+  const formState = getFormState()
+  const firstError = getFirstError({
+    formState: formState,
     options,
-    getState: store.getState
+    store
   })
-
-  const [formState, setFormState] = useState(initFormState)
-  const [firstError, setFirstError] = useState(initFirstError)
-  const [unmount, setUnmount] = useState(false)
-
-  useEffect(() => {
-    const handleFormChange = () => {
-      if (unmount) return
-
-      const newFormState = getFormState()
-      const newFirstError = getFirstError({
-        formState: newFormState,
-        options,
-        getState: store.getState
-      })
-
-      setFormState(newFormState)
-      setFirstError(newFirstError)
-    }
-
-    const unsubscribe = store.subscribe(handleFormChange)
-    return () => {
-      unsubscribe()
-      setUnmount(true)
-    }
-  }, [])
 
   const handleUpdateValue = createHandleUpdateValue({
     formState,
     options,
-    dispatch: store.dispatch
+    dispatch
   })
 
   return {

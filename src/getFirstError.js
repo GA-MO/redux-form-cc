@@ -1,11 +1,11 @@
 import isFunction from './isFunction'
 import getErrorMessage from './getErrorMessage'
 
-export default ({ formState, options, getState }) => {
+export default ({ formState, options, store }) => {
   const mapStateToValidationPriority = options.mapStateToValidationPriority
 
   if (isFunction(mapStateToValidationPriority)) {
-    const priority = mapStateToValidationPriority(getState())
+    const priority = mapStateToValidationPriority(store)
     for (const key of priority) {
       const field = formState[key]
       if (field.hidden) return ''
