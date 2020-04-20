@@ -32,7 +32,7 @@ const formData = state => {
       hidden: false,
       rules: [
         {
-          message: 'Required',
+          message: 'Firstname Required',
           rule: value => value !== ''
         },
         {
@@ -48,10 +48,10 @@ const formData = state => {
       value: state.form.lastname,
       placeholder: 'write down your lastname',
       disabled: false,
-      hidden: false,
+      hidden: true,
       rules: [
         {
-          message: 'Required',
+          message: 'Lastname Required',
           rule: value => value !== ''
         }
       ]
@@ -59,12 +59,17 @@ const formData = state => {
   }
 }
 
-const Input = ({ data, onChange }) => (
-  <div>
-    <input {...data} onChange={e => onChange(e.target.value)} />
-    {data.message}
-  </div>
-)
+const Input = ({ data, onChange }) => {
+  if (data.hidden) return null
+
+  return (
+    <div>
+      <label>{data.label}</label>
+      <input {...data} onChange={e => onChange(e.target.value)} />
+      {data.message}
+    </div>
+  )
+}
 
 const renderUIInputField = (fieldData, onChange) => {
   return <Input data={fieldData} onChange={onChange} />
